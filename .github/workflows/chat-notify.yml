@@ -1,0 +1,41 @@
+name: Notify Google Chat
+
+on:
+  push:
+  pull_request:
+    types: [opened, closed, reopened]
+  issues:
+    types: [opened, closed]
+  issue_comment:
+    types: [created]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post to Google Chat space
+        env:
+          WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          EVENT: ${{ toJson(github.event) }}
+          EVENT_NAME: ${{ github.event_name }}
+          ACTOR: ${{ github.actor }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if [ -z "${WEBHOOK}" ]; then echo "GOOGLE_CHAT_WEBHOOK not set; skipping"; exit 0; fi
+          case "$EVENT_NAME" in
+            push)
+              n=$(jq '.commits | length' <<<"$EVENT")
+              branch=$(jq -r '.ref | sub("refs/heads/"; "")' <<<"$EVENT")
+              lines=$(jq -r '.commits[:5][] | "• " + (.message | split("\n")[0]) + " (" + .author.name + ")"' <<<"$EVENT")
+              url=$(jq -r '.compare' <<<"$EVENT")
+              text="📦 *${ACTOR}* pushed ${n} commit(s) to *${REPO}* \`${branch}\`"$'\n'"${lines}"$'\n'"${url}" ;;
+            pull_request)
+              text="🔀 *${ACTOR}* $(jq -r '.action' <<<"$EVENT") PR: $(jq -r '.pull_request.title + "\n" + .pull_request.html_url' <<<"$EVENT")" ;;
+            issues)
+              text="📝 *${ACTOR}* $(jq -r '.action' <<<"$EVENT") issue: $(jq -r '.issue.title + "\n" + .issue.html_url' <<<"$EVENT")" ;;
+            issue_comment)
+              text="💬 *${ACTOR}* commented on: $(jq -r '.issue.title + "\n" + .comment.html_url' <<<"$EVENT")" ;;
+          esac
+          jq -n --arg t "$text" '{text: $t}' | curl -fsS -X POST -H 'Content-Type: application/json; charset=UTF-8' --data @- "$WEBHOOK" > /dev/null
+          echo "posted"
