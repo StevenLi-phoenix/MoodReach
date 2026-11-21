@@ -74,11 +74,41 @@ Several HF hits are explicitly synthetic (for example `africa-synth-*`), or have
    - 6–7 slides: problem → data → 3 insights → models → drivers → limits
    - an updated README
 
-### Possible task split
+## 6. Results and deliverables (first full run)
 
-| Person | Task |
+The plan above is implemented in `final_analysis.ipynb`. Three decisions changed it after checking the data:
+
+- **Original tweets only.** A reshare's `RetweetCount` is the original tweet's count (every reshare has ≥ 1), so using reshares would leak the answer.
+- **At most 20 tweets per user, and a train/test split by user.** One account (the official AWS feed) holds 43% of all retweets, and the top 1% of users hold 75%. Without the cap, test R² swung between −0.03 and 0.18 depending on which fold that account landed in.
+- **`Hour` is US Mountain time for every tweet.** The snowflake TweetIDs confirm this, so hour effects only make sense for US posters.
+
+| Question | Result |
 |---|---|
-| A | Data loading and cleaning, EDA rerun |
-| B | Sentiment classifier |
-| C | Hypothesis tests and engagement model |
-| D | Slides and README; rehearse to 5 minutes |
+| Q1 mood from text | TF-IDF + LogisticRegression macro-F1 0.81 (5-fold CV) vs Count + MultinomialNB 0.68 vs baseline 0.27. On human-labeled airline tweets it falls to 0.49: the model learned the lexicon. |
+| Q2 positive vs negative retweets (Welch t) | p = 2e-11, but Cohen's d = 0.12: real but negligible |
+| Q3 mood × weekday (chi-square) | p = 3e-14, Cramér's V = 0.031: negligible |
+| Q4 log retweets (LinearRegression) | test R² 0.088 (5-fold 0.094 ± 0.020) vs mean baseline 0. Adding words with Ridge (α = 10) reaches 0.154. |
+| Q4 retweeted at all (LogisticRegression) | AUC 0.72 vs 0.52 with mood features only |
+| Drivers (drop-one-group ΔR²) | author 0.044 > post format 0.036 > place 0.006 > mood 0.002 > time 0.0005 |
+| Bias–variance | Metadata model: train ≈ test error, so high bias. Ridge with words shows the U-shaped validation curve. |
+| Bonus (outside course scope) | Fine-tuned DistilBERT on text: AUC 0.76. Laya, an open Jev-compatible decision model, fine-tuned on text plus an author card: see `laya_results.json`. |
+
+### Deliverables
+
+| File | Contents | Status |
+|---|---|---|
+| `final_analysis.ipynb` | Sections 0–8: cleaning, data switch, EDA, classifier, tests, models, bias–variance, limitations, summary | Done; runs in about 3 min |
+| `figures/` | 13 slide figures, numbered by section | Done |
+| `results.json` | Every number used on the slides and in the README | Done |
+| `make_slides.py` → `MoodReach_Final.pptx` | 7 main slides plus backup, with speaker notes and timings | Draft; needs the team's styling and rehearsal |
+| `bonus_llm_finetune.ipynb`, `bonus_laya_finetune.ipynb` | LLM easter eggs | Backup slides only |
+| `../README.md` | Answer, results table, reproduce steps | Done |
+
+### Task split (each person presents the slides they own, about 40 s each, leaving 1.5 min for Q&A)
+
+| Person | Owns | Presents | Before Dec 3 |
+|---|---|---|---|
+| A | Section 0–2: data switch, cleaning decisions, EDA | Slides 2–3 (data, concentration) | Rerun the notebook end to end; be ready for "why cap 20 per user?" and "is Reach leakage?" |
+| B | Section 3: sentiment classifier | Slide 4 | Explain macro-F1 vs accuracy and the airline transfer check |
+| C | Sections 4–6: tests, engagement models, bias–variance | Slides 5–7 | Explain p-value vs effect size, ΔR² ablation and the Ridge curve |
+| D | Slides, README, bonus backup slides | Slide 1 (question) and the closing takeaway; runs the clock | Restyle the deck, rehearse twice to under 3.5 minutes, collect Q&A answers |
