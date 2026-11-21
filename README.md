@@ -43,7 +43,8 @@ The midterm used a 732-row Kaggle set that looked synthetic. Section 1 of the fi
   - Section 8: summary.
 - `Final/bonus_llm_finetune.ipynb`: an easter egg outside the course scope. Fine-tunes DistilBERT to predict "retweeted" from text (test AUC 0.76) and compares it with TF-IDF + LogisticRegression.
 - `Final/bonus_laya_finetune.ipynb` + `Final/laya_gpu_job.py`: a second easter egg with [Laya](https://huggingface.co/convaiinnovations/laya), an open Jev-compatible decision model. Zero-shot it reads human-labeled airline mood at macro-F1 0.69 (our lexicon-trained classifier: 0.49). For reach it starts at a coin flip (AUC 0.50); one epoch of fine-tuning on text lifts it to 0.73. Adding the author card as JSON gave 0.70, below LogisticRegression on the same metadata (0.72).
-- `Final/make_slides.py` → `Final/MoodReach_Final.pptx`: draft deck (7 slides + backup), built from `figures/` and `results.json`.
+- `Final/MoodReach_Final.pptx` (+ `.pdf` with speaker notes): the presented deck, 8 slides + 5 backup, ~3.5 min of talk.
+- `Final/make_slides.py` → `Final/MoodReach_draft.pptx`: the auto-generated draft the final deck was built from; every number comes from `results.json`.
 - `Final/figures/`: slide figures, numbered by notebook section.
 - `Final/Investigation_Report.md`: requirements, dataset decision, plan and task split.
 - `Midterm-presentation/`: midterm EDA, figures and slides (Oct 29).

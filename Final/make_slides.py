@@ -2,7 +2,7 @@
 
 Run from inside Final/ after final_analysis.ipynb (and optionally bonus_llm_finetune.ipynb):
     python make_slides.py
-Writes MoodReach_Final.pptx. Every number on the slides comes from results.json / bonus_results.json.
+Writes MoodReach_draft.pptx (the presented MoodReach_Final.pptx is hand-made from it). Every number on the slides comes from results.json / bonus_results.json.
 """
 
 import json
@@ -238,5 +238,5 @@ if LAYA:
         fig_w=7.6,
     )
 
-prs.save("MoodReach_Final.pptx")
-log.info("wrote MoodReach_Final.pptx (%d slides)", len(prs.slides))
+prs.save("MoodReach_draft.pptx")  # the presented deck, MoodReach_Final.pptx, is hand-made from this draft
+log.info("wrote MoodReach_draft.pptx (%d slides)", len(prs.slides))

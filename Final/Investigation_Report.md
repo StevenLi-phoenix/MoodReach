@@ -100,7 +100,7 @@ The plan above is implemented in `final_analysis.ipynb`. Three decisions changed
 | `final_analysis.ipynb` | Sections 0–8: cleaning, data switch, EDA, classifier, tests, models, bias–variance, limitations, summary | Done; runs in about 3 min |
 | `figures/` | 13 slide figures, numbered by section | Done |
 | `results.json` | Every number used on the slides and in the README | Done |
-| `make_slides.py` → `MoodReach_Final.pptx` | 7 main slides plus backup, with speaker notes and timings | Draft; needs the team's styling and rehearsal |
+| `MoodReach_Final.pptx` / `.pdf` | 8 main slides plus 5 backup, with speaker notes and timings | Final; built by hand from the `make_slides.py` draft |
 | `bonus_llm_finetune.ipynb`, `bonus_laya_finetune.ipynb` | LLM easter eggs | Backup slides only |
 | `../README.md` | Answer, results table, reproduce steps | Done |
 
