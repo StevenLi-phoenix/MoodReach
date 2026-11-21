@@ -1,0 +1,24 @@
+{
+  "device": "mps",
+  "model": "distilbert-base-uncased",
+  "epochs": 2,
+  "train_seconds": 343.9,
+  "test_auc": {
+    "Mood features only (LogReg)": 0.524,
+    "Text: TF-IDF + LogReg": 0.7329,
+    "Text: fine-tuned DistilBERT": 0.7588,
+    "All metadata, no text (LogReg)": 0.723
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "test_AUC": 0.7538113313533352,
+      "seconds": 173.60597920417786
+    },
+    {
+      "epoch": 2,
+      "test_AUC": 0.7587638890368898,
+      "seconds": 343.87496304512024
+    }
+  ]
+}

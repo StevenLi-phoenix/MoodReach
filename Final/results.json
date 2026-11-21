@@ -1,0 +1,219 @@
+{
+  "data": {
+    "raw_rows": 102062,
+    "rows_after_dedup": 99999,
+    "date_min": "2016-01-01",
+    "date_max": "2016-04-02",
+    "countries": 151,
+    "users": 33212,
+    "original_tweets": 64538,
+    "original_users": 20975,
+    "original_share_retweeted": 0.1831,
+    "reshare_min_rt": 1,
+    "top_account_share": 0.4302,
+    "top1pct_users_share": 0.7473,
+    "cap_per_user": 20,
+    "capped_tweets": 48822
+  },
+  "classifier": {
+    "table_test": [
+      {
+        "model": "Majority baseline",
+        "accuracy": 0.671,
+        "macro_F1": 0.268
+      },
+      {
+        "model": "Count + MultinomialNB",
+        "accuracy": 0.77,
+        "macro_F1": 0.681
+      },
+      {
+        "model": "TF-IDF + MultinomialNB",
+        "accuracy": 0.781,
+        "macro_F1": 0.53
+      },
+      {
+        "model": "Count + LogisticRegression",
+        "accuracy": 0.894,
+        "macro_F1": 0.822
+      },
+      {
+        "model": "TF-IDF + LogisticRegression",
+        "accuracy": 0.9,
+        "macro_F1": 0.827
+      }
+    ],
+    "best": "TF-IDF + LogisticRegression",
+    "best_cv_macro_f1_mean": 0.812,
+    "best_cv_macro_f1_std": 0.0035,
+    "nb_cv_macro_f1_mean": 0.6771,
+    "airline_transfer": [
+      {
+        "model": "Majority baseline (always 'negative')",
+        "accuracy": 0.627,
+        "macro_F1": 0.257
+      },
+      {
+        "model": "Count + MultinomialNB",
+        "accuracy": 0.589,
+        "macro_F1": 0.473
+      },
+      {
+        "model": "TF-IDF + LogisticRegression",
+        "accuracy": 0.528,
+        "macro_F1": 0.494
+      }
+    ]
+  },
+  "h1_ttest": {
+    "n_positive": 12861,
+    "n_negative": 3386,
+    "mean_rt_positive": 0.599,
+    "mean_rt_negative": 0.463,
+    "rate_positive": 0.2087,
+    "rate_negative": 0.1527,
+    "welch_t": 6.748,
+    "welch_p": 1.65e-11,
+    "mannwhitney_p": 3.46e-13,
+    "cohen_d": 0.121
+  },
+  "h2_chi2": {
+    "chi2": 91.17,
+    "dof": 12,
+    "p": 2.93e-14,
+    "cramers_v": 0.0306
+  },
+  "regression": {
+    "table": [
+      {
+        "model": "Mean baseline (test)",
+        "MAE": 0.3085,
+        "RMSE": 0.4664,
+        "R2": -0.0001
+      },
+      {
+        "model": "LinearRegression (train)",
+        "MAE": 0.2913,
+        "RMSE": 0.4563,
+        "R2": 0.1019
+      },
+      {
+        "model": "LinearRegression (test)",
+        "MAE": 0.2878,
+        "RMSE": 0.4454,
+        "R2": 0.0879
+      }
+    ],
+    "cv_r2_mean": 0.0938,
+    "cv_r2_std": 0.0199,
+    "cv_r2_folds": [
+      0.0861,
+      0.0596,
+      0.0974,
+      0.1113,
+      0.1145
+    ],
+    "ablation": [
+      {
+        "group": "author",
+        "R2 drop when removed": 0.0444,
+        "R2 using this group alone": 0.042
+      },
+      {
+        "group": "post format",
+        "R2 drop when removed": 0.0362,
+        "R2 using this group alone": 0.0395
+      },
+      {
+        "group": "place",
+        "R2 drop when removed": 0.0055,
+        "R2 using this group alone": 0.0045
+      },
+      {
+        "group": "mood",
+        "R2 drop when removed": 0.0015,
+        "R2 using this group alone": 0.0012
+      },
+      {
+        "group": "time",
+        "R2 drop when removed": 0.0005,
+        "R2 using this group alone": 0.0004
+      },
+      {
+        "group": "gender",
+        "R2 drop when removed": 0.0003,
+        "R2 using this group alone": 0.0
+      }
+    ]
+  },
+  "logistic": {
+    "table": [
+      {
+        "model": "Majority baseline (never retweeted)",
+        "accuracy": 0.821,
+        "precision": 0.0,
+        "recall": 0.0,
+        "ROC_AUC": 0.5
+      },
+      {
+        "model": "Mood features only",
+        "accuracy": 0.669,
+        "precision": 0.203,
+        "recall": 0.291,
+        "ROC_AUC": 0.524
+      },
+      {
+        "model": "All features",
+        "accuracy": 0.672,
+        "precision": 0.306,
+        "recall": 0.656,
+        "ROC_AUC": 0.723
+      }
+    ],
+    "top_odds_change_per_sd": {
+      "log_reach": 0.711,
+      "is_reply": -0.402,
+      "n_mentions": 0.453,
+      "n_hashtags": 0.423,
+      "country_Turkey": -0.29,
+      "text_len": -0.133,
+      "is_positive": 0.11,
+      "country_India": -0.082
+    }
+  },
+  "bias_variance": {
+    "best_alpha": 10.0,
+    "ridge_text_best_test_r2": 0.1538,
+    "ridge_text_smallest_alpha": {
+      "train_RMSE": 0.3275,
+      "test_RMSE": 0.5281
+    },
+    "metadata_linreg_test_r2": 0.0879,
+    "top_words_up": {
+      "photo": 0.742,
+      "kca": 0.623,
+      "awsidentity": 0.58,
+      "votemainefpp": 0.558,
+      "8kmileschat": 0.526,
+      "bigdata": 0.513,
+      "ldconf": 0.507,
+      "datasciencecentral": 0.504,
+      "serverless": 0.494,
+      "kms": 0.49,
+      "goserverless": 0.49,
+      "werner": 0.478
+    },
+    "top_words_down": {
+      "rt": -0.664,
+      "utm_source": -0.364,
+      "twibble": -0.345,
+      "twitterfeed": -0.344,
+      "neuvoo": -0.299,
+      "jobs": -0.27,
+      "udemy": -0.265,
+      "dlvr": -0.262,
+      "official": -0.261,
+      "via": -0.258
+    }
+  }
+}
