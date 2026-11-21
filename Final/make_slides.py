@@ -20,6 +20,7 @@ log = logging.getLogger("moodreach.slides")
 
 R = json.load(open("results.json"))
 BONUS = json.load(open("bonus_results.json")) if os.path.exists("bonus_results.json") else None
+LAYA = json.load(open("laya_results.json")) if os.path.exists("laya_results.json") else None
 TEAM = "Vince Pamolarco · John Yun · Siddharth Srivastava · Steven Li"
 
 INK = RGBColor(0x1F, 0x24, 0x33)
@@ -206,6 +207,34 @@ if BONUS:
             "Outside the course scope; kept as a bonus",
         ],
         "Backup: only if asked about deep learning.",
+    )
+
+if LAYA:
+    mood = {r["model"]: r for r in LAYA["airline_mood"]}
+    lex_best = next(m for m in mood if m.endswith("(lexicon labels)") and "MultinomialNB" not in m)
+    ra = LAYA["reach_auc"]
+    slide(
+        "Backup · Open decision model (Laya): mood zero-shot",
+        "7_2_laya_mood",
+        [
+            "Laya: open, Jev-compatible 'System One' model (421M), typed answers with calibrated probabilities",
+            f"Human-labeled airline mood, no training: macro-F1 {mood['Laya zero-shot (no training)']['macro_F1']:.2f} vs {mood[lex_best]['macro_F1']:.2f} for our lexicon-trained model",
+            "Mood is a language task: pretrained models read it; lexicon labels do not",
+        ],
+        "Backup: only if asked about LLMs.",
+        fig_w=8.0,
+    )
+    slide(
+        "Backup · Fine-tuned Laya: tweet + author card → retweeted?",
+        "7_3_laya_reach",
+        [
+            f"Zero-shot AUC {ra['Laya zero-shot (text + author card)']:.3f} → fine-tuned {ra['Fine-tuned Laya (text + author card)']:.3f}",
+            f"Fine-tuned on {LAYA['train_rows']:,} tweets, tested on {LAYA['test_rows']:,} from unseen users"
+            + (f", {LAYA['train_minutes']:.0f} min on {LAYA['device'].upper()}" if LAYA.get("train_minutes") else ""),
+            f"LogReg on metadata {ra['All metadata, no text (LogReg)']:.3f}; mood only {ra['Mood features only (LogReg)']:.3f}",
+        ],
+        "Backup: one model reads both the words and the author card.",
+        fig_w=7.6,
     )
 
 prs.save("MoodReach_Final.pptx")
