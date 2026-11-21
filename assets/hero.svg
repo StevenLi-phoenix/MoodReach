@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#14112a"/>
+      <stop offset="1" stop-color="#241a44"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#b98cff" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#b98cff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bar" x1="0" x2="1">
+      <stop offset="0" stop-color="#7a4fb0"/>
+      <stop offset="1" stop-color="#c79bff"/>
+    </linearGradient>
+    <path id="flow1" d="M 176 95 C 250 95, 300 190, 440 200"/>
+    <path id="flow2" d="M 176 200 C 250 200, 300 200, 440 200"/>
+    <path id="flow3" d="M 176 305 C 250 305, 300 210, 440 200"/>
+  </defs>
+
+  <rect width="1200" height="400" fill="url(#bg)"/>
+  <circle cx="455" cy="200" r="120" fill="url(#glow)"/>
+
+  <!-- tweet cards -->
+  <g font-size="13" fill="#e9e4ff">
+    <g transform="translate(24 62)">
+      <rect width="150" height="66" rx="10" fill="#2e2754" stroke="#5b4c96"/>
+      <circle cx="20" cy="20" r="9" fill="#7a4fb0"/>
+      <text x="36" y="25" font-weight="700">@awscloud</text>
+      <text x="12" y="50" fill="#bfb5ea">New region live ☁️  ↻ 85</text>
+    </g>
+    <g transform="translate(24 167)">
+      <rect width="150" height="66" rx="10" fill="#2e2754" stroke="#5b4c96"/>
+      <circle cx="20" cy="20" r="9" fill="#2e9e6a"/>
+      <text x="36" y="25" font-weight="700">@dev_ana</text>
+      <text x="12" y="50" fill="#bfb5ea">Serverless is great!  ↻ 2</text>
+    </g>
+    <g transform="translate(24 272)">
+      <rect width="150" height="66" rx="10" fill="#2e2754" stroke="#5b4c96"/>
+      <circle cx="20" cy="20" r="9" fill="#d1495b"/>
+      <text x="36" y="25" font-weight="700">@jobsfeed</text>
+      <text x="12" y="50" fill="#bfb5ea">via dlvr.it — jobs  ↻ 0</text>
+    </g>
+  </g>
+
+  <!-- flows into the model -->
+  <g fill="none" stroke="#6c5aa8" stroke-width="2" stroke-dasharray="4 6" opacity="0.8">
+    <use href="#flow1"/><use href="#flow2"/><use href="#flow3"/>
+  </g>
+  <g fill="#c79bff">
+    <circle r="4"><animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#flow1"/></animateMotion></circle>
+    <circle r="4"><animateMotion dur="2.6s" begin="0.9s" repeatCount="indefinite"><mpath href="#flow2"/></animateMotion></circle>
+    <circle r="4"><animateMotion dur="2.6s" begin="1.7s" repeatCount="indefinite"><mpath href="#flow3"/></animateMotion></circle>
+  </g>
+
+  <!-- model node -->
+  <g transform="translate(455 200)">
+    <circle r="46" fill="#2e2754" stroke="#c79bff" stroke-width="2.5">
+      <animate attributeName="r" values="44;48;44" dur="2.6s" repeatCount="indefinite"/>
+    </circle>
+    <text y="-4" text-anchor="middle" font-size="14" font-weight="700" fill="#f3eeff">what</text>
+    <text y="14" text-anchor="middle" font-size="14" font-weight="700" fill="#f3eeff">drives it?</text>
+  </g>
+  <path d="M 505 200 L 560 200" stroke="#c79bff" stroke-width="2.5"/>
+  <polygon points="560,193 574,200 560,207" fill="#c79bff"/>
+
+  <!-- title -->
+  <text x="600" y="78" font-size="58" font-weight="800" fill="#f3eeff">MoodReach</text>
+  <text x="602" y="110" font-size="18" fill="#bfb5ea">What drives the reach of a tweet? 99,999 real tweets, 2016</text>
+
+  <!-- driver bars: test R² lost when each feature group is removed -->
+  <g font-size="16" fill="#e9e4ff">
+    <text x="600" y="150" font-size="13" fill="#9d92c9">Test R² lost when the group is removed</text>
+    <text x="600" y="182">author</text>
+    <rect x="720" y="166" width="400" height="22" rx="4" fill="url(#bar)"><animate attributeName="width" from="0" to="400" dur="1.2s" fill="freeze"/></rect>
+    <text x="600" y="220">post format</text>
+    <rect x="720" y="204" width="326" height="22" rx="4" fill="url(#bar)"><animate attributeName="width" from="0" to="326" dur="1.2s" begin="0.15s" fill="freeze"/></rect>
+    <text x="600" y="258">place</text>
+    <rect x="720" y="242" width="50" height="22" rx="4" fill="url(#bar)"><animate attributeName="width" from="0" to="50" dur="1.2s" begin="0.3s" fill="freeze"/></rect>
+    <text x="600" y="296" fill="#7ee0b0">mood</text>
+    <rect x="720" y="280" width="14" height="22" rx="4" fill="#2e9e6a"><animate attributeName="width" from="0" to="14" dur="1.2s" begin="0.45s" fill="freeze"/></rect>
+    <text x="745" y="296" font-size="14" fill="#7ee0b0">← barely matters</text>
+    <text x="600" y="334">time</text>
+    <rect x="720" y="318" width="5" height="22" rx="4" fill="url(#bar)"><animate attributeName="width" from="0" to="5" dur="1.2s" begin="0.6s" fill="freeze"/></rect>
+  </g>
+  <text x="600" y="376" font-size="13" fill="#9d92c9">NYU Tandon Data Science Bootcamp · Fall 2026 · Section 2</text>
+</svg>
