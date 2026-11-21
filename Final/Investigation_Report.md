@@ -91,7 +91,7 @@ The plan above is implemented in `final_analysis.ipynb`. Three decisions changed
 | Q4 retweeted at all (LogisticRegression) | AUC 0.72 vs 0.52 with mood features only |
 | Drivers (drop-one-group ΔR²) | author 0.044 > post format 0.036 > place 0.006 > mood 0.002 > time 0.0005 |
 | Bias–variance | Metadata model: train ≈ test error, so high bias. Ridge with words shows the U-shaped validation curve. |
-| Bonus (outside course scope) | Fine-tuned DistilBERT on text: AUC 0.76. Laya, an open Jev-compatible decision model, fine-tuned on text plus an author card: see `laya_results.json`. |
+| Bonus (outside course scope) | Fine-tuned DistilBERT on text: AUC 0.76. Laya (open, Jev-compatible): zero-shot airline mood macro-F1 0.69 vs 0.49 for our lexicon-trained classifier; reach AUC 0.50 zero-shot, 0.73 fine-tuned on text, 0.70 with the author card as JSON (one epoch each, RTX 4060). |
 
 ### Deliverables
 

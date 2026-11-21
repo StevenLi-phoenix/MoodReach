@@ -1,0 +1,58 @@
+{
+  "base": "convaiinnovations/laya",
+  "train_rows": 39358,
+  "test_rows": 9464,
+  "jobs": {
+    "text": {
+      "variant": "text",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+      "train_minutes": 91.0,
+      "train_items": 38958,
+      "epoch_loss": [
+        1.4270425314737842
+      ],
+      "peak_gpu_gb": 8.32
+    },
+    "card": {
+      "variant": "card",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+      "train_minutes": 125.0,
+      "train_items": 38958,
+      "epoch_loss": [
+        2.3427616062931738
+      ],
+      "peak_gpu_gb": 8.32
+    }
+  },
+  "airline_mood": [
+    {
+      "model": "Majority baseline (always 'negative')",
+      "accuracy": 0.627,
+      "macro_F1": 0.257
+    },
+    {
+      "model": "Count + MultinomialNB (lexicon labels)",
+      "accuracy": 0.589,
+      "macro_F1": 0.473
+    },
+    {
+      "model": "TF-IDF + LogisticRegression (lexicon labels)",
+      "accuracy": 0.528,
+      "macro_F1": 0.494
+    },
+    {
+      "model": "Laya zero-shot (no training)",
+      "accuracy": 0.768,
+      "macro_F1": 0.691
+    }
+  ],
+  "reach_auc": {
+    "Mood features only (LogReg)": 0.524,
+    "Laya zero-shot, text": 0.4969,
+    "Laya zero-shot, text + author card": 0.5064,
+    "All metadata, no text (LogReg)": 0.723,
+    "Fine-tuned DistilBERT, text": 0.7588,
+    "Fine-tuned Laya, text": 0.7344,
+    "Fine-tuned Laya, text + author card": 0.6954
+  }
+}

@@ -214,7 +214,7 @@ if LAYA:
     lex_best = next(m for m in mood if m.endswith("(lexicon labels)") and "MultinomialNB" not in m)
     ra = LAYA["reach_auc"]
     slide(
-        "Backup · Open decision model (Laya): mood zero-shot",
+        "Backup · Laya: reading mood zero-shot",
         "7_2_laya_mood",
         [
             "Laya: open, Jev-compatible 'System One' model (421M), typed answers with calibrated probabilities",
@@ -224,16 +224,17 @@ if LAYA:
         "Backup: only if asked about LLMs.",
         fig_w=8.0,
     )
+    card_job = LAYA.get("jobs", {}).get("card", {})
     slide(
-        "Backup · Fine-tuned Laya: tweet + author card → retweeted?",
+        "Backup · Fine-tuned Laya: does it learn reach?",
         "7_3_laya_reach",
         [
-            f"Zero-shot AUC {ra['Laya zero-shot (text + author card)']:.3f} → fine-tuned {ra['Fine-tuned Laya (text + author card)']:.3f}",
-            f"Fine-tuned on {LAYA['train_rows']:,} tweets, tested on {LAYA['test_rows']:,} from unseen users"
-            + (f", {LAYA['train_minutes']:.0f} min on {LAYA['device'].upper()}" if LAYA.get("train_minutes") else ""),
-            f"LogReg on metadata {ra['All metadata, no text (LogReg)']:.3f}; mood only {ra['Mood features only (LogReg)']:.3f}",
+            f"Zero-shot AUC {ra['Laya zero-shot, text']:.2f} (coin flip) → fine-tuned on text {ra['Fine-tuned Laya, text']:.3f}",
+            f"Text + author card {ra['Fine-tuned Laya, text + author card']:.3f}: digits in JSON are hard to learn in 1 epoch; LogReg on metadata {ra['All metadata, no text (LogReg)']:.3f}",
+            f"{LAYA['train_rows']:,} train / {LAYA['test_rows']:,} test tweets from unseen users"
+            + (f"; {card_job['train_minutes']:.0f} min on an {card_job['device'].replace('NVIDIA GeForce ', '')}" if card_job.get("train_minutes") else ""),
         ],
-        "Backup: one model reads both the words and the author card.",
+        "Backup: words learn reach only after training; mood alone stays near 0.52.",
         fig_w=7.6,
     )
 

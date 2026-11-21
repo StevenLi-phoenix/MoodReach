@@ -1,7 +1,7 @@
 """GPU job for bonus_laya_finetune.ipynb: zero-shot and fine-tuned Laya (open, Jev-compatible decision model).
 
 The notebook writes the inputs to data/laya_job/; run this wherever a GPU is free, then copy *.csv / meta_*.json back:
-    python laya_gpu_job.py --work data/laya_job --device cuda   # ~1 h on an RTX 4060 laptop GPU
+    python laya_gpu_job.py --work data/laya_job --device cuda   # ~3.7 h on an RTX 4060 laptop GPU (two 1-epoch fine-tunes)
 Every step writes its own output and is skipped when that output exists, so the job can resume after a crash.
 Needs: torch, pandas, laya (>= 0.5, `uv pip install laya`).
 """
